@@ -1111,10 +1111,7 @@ class Textile
 			}
 		}
 
-#		$this->dump( $this->notes );
-
 		# Replace list markers...
-//		$text = preg_replace_callback("@<p>notelist({$this->c})(?:\:($wrd))?(?:#([$wrd-]*)#)?([\^!]?)(\+?)\.[\s]*</p>@U$mod", array(&$this, "fNoteLists"), $text );
 		$text = preg_replace_callback("@<p>notelist({$this->c})(?:\:($wrd))?([\^!]?)(\+?)\.(?:[ ]*([$wrd-]*))?[\s]*</p>@U$mod", array(&$this, "fNoteLists"), $text );
 
 		return $text;
@@ -1139,9 +1136,7 @@ class Textile
 		  $label = 'undefined';
 
 		# Assign an id if the note reference parse hasn't found the label yet.
-		$id = @$this->notes[$list][$label]['id'];
-		if( !$id )
-			$this->notes[$list][$label]['id'] = uniqid(rand());
+		$this->notes[$list][$label]['id'] = $id = $this->getNoteID($list, $label);
 
 		if( empty($this->notes[$list][$label]['def']) ) # Ignores subsequent defs using the same label
 		{
@@ -1200,12 +1195,10 @@ class Textile
 
 		# Make our anchor point & stash it for possible use in backlinks when the
 		# note list is generated later...
-		$this->notes[$list][$label]['refids'][] = $refid = uniqid(rand());
+		$this->notes[$list][$label]['refids'][] = $refid = $this->getNoteID($list, $label, true);
 
 		# If we are referencing a note that hasn't had the definition parsed yet, then assign it an ID...
-		$id = @$this->notes[$list][$label]['id'];
-		if( !$id )
-			$id = $this->notes[$list][$label]['id'] = uniqid(rand());
+		$this->notes[$list][$label]['id'] = $id = $this->getNoteID($list, $label);
 
 		# Build the link (if any)...
 		$_ = '<span id="noteref'.$refid.'">'.$num.'</span>';
@@ -1219,14 +1212,29 @@ class Textile
 	}
 
 // -------------------------------------------------------------
+	function getNoteID( $list, $label, $force=false )
+	{
+		$id = @$this->notes[$list][$label]['id'];
+		if( $force || !$id )
+		{
+			if( $list != $this->default_list && !empty($list) )
+				$p[] = $list;
+		  $p[] = $label;
+		  $p[] = substr( uniqid(rand()), 0, 6 );
+		  $id = '_'.join('_', $p);
+		  $id = mb_convert_case( $id, MB_CASE_LOWER, 'UTF-8' );
+		  $id = rawurlencode( $id );
+		}
+		return $id;
+	}
+
+// -------------------------------------------------------------
 	function fNoteLists($m)
 	{
 		list(, $att, $start_char, $g_links, $extras ) = $m;
 		if( !$start_char ) $start_char = 'a';
 		$list = ( isset($m[5]) ) ? $m[5] : $this->default_list;
 		$index = "$list.$start_char.$g_links.$extras";
-
-//$this->dump( $m, $index );
 
 		if( empty($this->notelist_cache[$index]) ) { # If not in cache, build the entry...
 			$o = array();
