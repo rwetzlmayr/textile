@@ -893,7 +893,7 @@ class Textile
 			# Is this an anonymous block with a note definition?
 			$notedef = preg_replace_callback("/
 					^note\#               #  start of note def marker
-					([$wrd:-]+)           # !label
+					([^%<*!@#^([{.]+)     # !label
 					([*!^]?)              # !link
 					({$this->c})          # !att
 					\.[\s]+               #  end of def marker
