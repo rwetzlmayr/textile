@@ -21,7 +21,7 @@ Simple named notelist:
   expect : |
     <p>Here is some<sup><a href="#note_list1_some_"><span id="noteref_list1_some_">1</span></a></sup> text. And a little more.</p>
 
-    <ol>
+    <ol class="notelist">
     <li><a href="#noteref_list1_some_"><sup>a</sup></a><span id="note_list1_some_"> </span>Some is an English word.</li>
     </ol>
 
@@ -59,7 +59,7 @@ Simple named notelist with id attrs:
   expect : |
     <p>Here is some<sup id="refid"><a href="#note_list1_some_"><span id="noteref_list1_some_">1</span></a></sup> text. And a little more.</p>
 
-    <ol id="listid">
+    <ol class="notelist" id="listid">
     <li id="noteid"><a href="#noteref_list1_some_"><sup>a</sup></a><span id="note_list1_some_"> </span>Some is an English word.</li>
     </ol>
 
@@ -107,14 +107,14 @@ Two notelists without attrs:
   expect : |
     <p>Here is some<sup><a href="#note_list1_some_"><span id="noteref_list1_some_">1</span></a></sup> text<sup><a href="#note_list1_text_"><span id="noteref_list1_text_">2</span></a></sup>. And a little more.</p>
 
-    <ol>
+    <ol class="notelist">
     <li><a href="#noteref_list1_some_"><sup>a</sup></a><span id="note_list1_some_"> </span>Some is an English word.</li>
     <li><a href="#noteref_list1_text_"><sup>a</sup></a><span id="note_list1_text_"> </span>Text is another English word.</li>
     </ol>
 
     <p>And here is another paragraph<sup><a href="#note_list2_para_"><span id="noteref_list2_para_">1</span></a></sup> with another example<sup><a href="#note_list2_example_"><span id="noteref_list2_example_">2</span></a></sup>.</p>
 
-    <ol>
+    <ol class="notelist">
     <li><a href="#noteref_list2_para_"><sup>a</sup></a><span id="note_list2_para_"> </span>Paragraph.</li>
     <li><a href="#noteref_list2_example_"><sup>a</sup></a><span id="note_list2_example_"> </span>Example.</li>
     </ol>

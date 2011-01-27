@@ -330,6 +330,10 @@ Applying Attributes:
 @define('txt_plusminus',          '&#177;');
 @define('txt_has_unicode',        @preg_match('/\pL/u', 'a')); // Detect if Unicode is compiled into PCRE
 
+// defined these for disambiguation classes. If you want to turn them off, set them to ''
+@define('txt_notelist_class',     'notelist');
+@define('txt_footnote_class',     'footnote');
+
 class Textile
 {
 	var $hlgn;
@@ -557,6 +561,10 @@ class Textile
 		$id = '';
 		$atts = '';
 
+		if( ($element === 'notelist') && empty($in) && ('' !== txt_notelist_class) ) {
+			return ' class="'.txt_notelist_class.'"';
+		}
+
 		if (!empty($in)) {
 			$matched = $in;
 			if ($element == 'td') {
@@ -600,6 +608,10 @@ class Textile
 			if (preg_match("/^(.*)#(.*)$/", $class, $ids)) {
 				$id = $ids[2];
 				$class = $ids[1];
+			}
+
+			if( ($element === 'notelist') && empty($class) && ('' !== txt_notelist_class) ) {
+			  $class = txt_notelist_class;
 			}
 
 			if ($element == 'col') {
@@ -914,8 +926,8 @@ class Textile
 			else
 				$supp_id = ' id="fn' . $fnid . '"';
 
-			if (strpos($atts, 'class=') === false)
-				$atts .= ' class="footnote"';
+			if( (strpos($atts, 'class=') === false) && ('' !== txt_footnote_class) )
+				$atts .= ' class="'.txt_footnote_class.'"';
 
 			$backlink = (strpos($att, '^') === false) ? $fns[1] : '<a href="#fnrev' . $fnid . '">'.$fns[1].'</a>';
 			$sup = "<sup$supp_id>$backlink</sup>";
@@ -1266,7 +1278,7 @@ class Textile
 		$_ = ($this->notelist_cache[$index]) ? $this->notelist_cache[$index] : '';
 
 		if( !empty($_) ) {
-			$list_atts = $this->pba($att);
+			$list_atts = $this->pba($att, 'notelist');
 			$_ = "<ol$list_atts>\n$_\n</ol>";
 		}
 
