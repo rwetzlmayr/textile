@@ -767,7 +767,7 @@ class Textile
 // -------------------------------------------------------------
 	function lists($text)
 	{
-		return preg_replace_callback("/^([#*;:]+$this->lc[ .].*)$(?![^#*;:])/smU", array(&$this, "fList"), $text);
+		return preg_replace_callback("/^([#*;:]+$this->lc[ .].*)$(?![^#*;:])/sU", array(&$this, "fList"), $text);
 	}
 
 // -------------------------------------------------------------
