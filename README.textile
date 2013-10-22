@@ -104,8 +104,8 @@ p. Textpattern is one project that is known to use a relative image prefix.
 
 h2. Getting In Contact
 
-The textile project welcomes constructive input and bug reports from users. You can contact me in several ways.
+The textile project welcomes constructive input and bug reports from users. You can get in contact in several ways...
 
-* "Open an issue":https://github.com/netcarver/textile/issues on the repository for a feature request or bug.
+* "Open an issue":https://github.com/textile/php-textile/issues on the root repository (at @textile/php-textile@) for a feature request or bug.
 * If you are on IRC, feel free to drop into *#textile* on *freenode.net* ("webchat":http://webchat.freenode.net/?channels=#textile.)
 * Use the generic "contact form":http://sitemonks.com/.
