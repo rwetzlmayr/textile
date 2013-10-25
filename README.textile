@@ -1,4 +1,11 @@
-h1. TEXTILE
+h1. TEXTILE HAS MOVED
+
+This is no longer the home repo for Textile. It is now housed under the textile github organization at "textile/php-textile":https://github.com/textile/php-textile.
+
+*Do Not Fork This Repo* fork _textile/php-textile_ instead.
+
+
+h2. TEXTILE
 
 p. *A Humane Web Text Generator*
 
